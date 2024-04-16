@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Facturier</title>
+		<meta charset="utf-8" />
+        <link rel="icon" href="static/images/favicon.ico">
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!--		<link rel="stylesheet" href="static/css/main.css" />-->
+	</head>
+	<body class="is-loading">
+			<div id="wrapper">
+                <section id="main">
+                    <header>
+                        <img src="static/images/logoa.png" alt="" width="85%"/>
+                        <h1>Facturier</h1>
+                    </header>
+                    <hr />
+                    <form method="POST" action="/complete" enctype="multipart/form-data">
+						<div>
+							<label for="compte">Enter a Number:</label>
+							<input type="number" id="compte" name="compte" required>
+						</div>
+						<div>
+							<label for="email_input">Enter your Email:</label>
+							<input type="email" id="email_input" name="email_input" required>
+						</div>
+						<div>
+							<label for="phone_input">Enter your Phone Number:</label>
+							<input type="tel" id="phone_input" name="phone_input" pattern="[0-9]{8}" required>
+							<small>Format: xxx-xxx-xxxx</small>
+						</div>
+
+							<div class="field">
+								<div class="select-wrapper">
+									<select name="designation" id="designation">
+										{% for obj in objects %}
+											<option value="{{obj}}">{{obj}}</option>
+										{% endfor %}
+									</select>
+									<input type="number" name="quantity" id="quantity" min="1" max="100" step="1" value="1" required/>
+								</div>
+							</div>
+							<input type="submit" value="Générer la facture">
+						</form>
+                    <hr />
+                </section>
+
+            <!-- Footer -->
+                <footer id="footer">
+                    <ul class="copyright">
+                        <li>&copy; samandari</li>
+                    </ul>
+                </footer>
+			</div>
+
+		<!-- Scripts -->
+			<script>
+				if ('addEventListener' in window) {
+					window.addEventListener('load', function() { document.body.className = document.body.className.replace(/\bis-loading\b/, ''); });
+					document.body.className += (navigator.userAgent.match(/(MSIE|rv:11\.0)/) ? ' is-ie' : '');
+				}
+			</script>
+
+	</body>
+</html>
