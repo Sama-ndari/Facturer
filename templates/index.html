@@ -16,34 +16,64 @@
                         <h1>Facturier</h1>
                     </header>
                     <hr />
-                    <form method="POST" action="/complete" enctype="multipart/form-data">
-						<div>
-							<label for="compte">Enter a Number:</label>
-							<input type="number" id="compte" name="compte" required>
-						</div>
-						<div>
-							<label for="email_input">Enter your Email:</label>
-							<input type="email" id="email_input" name="email_input" required>
-						</div>
-						<div>
-							<label for="phone_input">Enter your Phone Number:</label>
-							<input type="tel" id="phone_input" name="phone_input" pattern="[0-9]{8}" required>
-							<small>Format: xxx-xxx-xxxx</small>
-						</div>
+                    <form name = 'form' method="post" action="traitement.php">
+						<fieldset>
+							<legend>Requis</legend>
+							<div>
+								<label for="compte">Num. Compte:</label>
+								<input type="text" id="compte" name="compte" placeholder="" autofocus required>
+							</div>
+							<div>
+								<label for="products">Nombre de Produits :</label>
+								<input type="number" id="products" name="products" min="1" max="12" step="1" value="1" required>
+							</div>
+						</fieldset>
+						<fieldset>
+							<legend>Optionnel</legend> <!-- Titre du fieldset -->
 
+							<label for="name">Nom et Prenom</label> :  <input type="text" name="name" id="name" value="Ndayisenga Jules Cesar Junior"/>
+							<!--	size: agrandir // maxlength: limiter l nombre de caracteres a saisir // value: remplir le champ avec une valeur par defaut   -->
+							<br /> <br />
+							<label for="post">Poste</label> :  <input type="text" name="post" id="post" value="Directeur General"/>
+							<!--	size: agrandir // maxlength: limiter l nombre de caracteres a saisir // value: remplir le champ avec une valeur par defaut   -->
+							<br /> <br />
+							<label for="phone1">Numero de Telephone 1:</label> <input type="tel" id="phone1" name="phone1" value="77568903">
+							<br>
+							<label for="phone2">Numero de Telephone 2:</label> <input type="tel" id="phone2" name="phone2" value="68334260">
+							<br> <br>
+							<label for="mail">Email</label> :  <input type="email" name="mail" id="mail" value = "Address@example.com" required />
+							<br /> <br />
+							<label for="company">Compagnie</label> :  <input type="text" name="company" id="company" value="BRB"/>
+							<!--	size: agrandir // maxlength: limiter l nombre de caracteres a saisir // value: remplir le champ avec une valeur par defaut   -->
+							<br /> <br />
+							<label for="nature">Type de Compagnie</label> :  <input type="text" name="nature" id="nature" value="Banque"/>
+							<!--	size: agrandir // maxlength: limiter l nombre de caracteres a saisir // value: remplir le champ avec une valeur par defaut   -->
+							<br /> <br />
+							<label for="adress">Adresse</label> :  <input type="text" name="adress" id="adress" value="Rohero I,Av. de l'Amitie,Building Isanganiro"/>
+							<!--	size: agrandir // maxlength: limiter l nombre de caracteres a saisir // value: remplir le champ avec une valeur par defaut   -->
+							<br /> <br />
+						</fieldset>
+						<fieldset>
+							<legend>Produits </legend>
 							<div class="field">
 								<div class="select-wrapper">
-									<select name="designation" id="designation">
-										{% for obj in objects %}
-											<option value="{{obj}}">{{obj}}</option>
-										{% endfor %}
-									</select>
-									<input type="number" name="quantity" id="quantity" min="1" max="100" step="1" value="1" required/>
+									{% for a in range(2) %}
+										<small>{{a+1}}.</small>
+										<select name="designation{{a}}" id="designation{{a}}">
+											{% for obj in objects %}
+												<option value="{{obj}}">{{obj}}</option>
+											{% endfor %}
+											<input type="number" name="{{obj}}" id="{{obj}}" min="1" max="100" step="1" value="1" required/>
+											<br />
+										</select>
+									{% endfor %}
 								</div>
 							</div>
-							<input type="submit" value="Générer la facture">
-						</form>
-                    <hr />
+						</fieldset>
+						<input type="submit" value="Envoyer" />
+						<br /> <br />
+					</form>
+					<hr />
                 </section>
 
             <!-- Footer -->
