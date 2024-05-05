@@ -15,18 +15,24 @@ def index():
 
 @app.route("/complete", methods=["POST"])
 def complete():
+    # Récupérer les données du formulaire
+    company = Company(name=request.form["company"], nature=request.form["nature"])
+    responsable = Responsable(name=request.form["name"], post=request.form["post"],
+                              adress=request.form["adress"],
+                              mail=request.form["mail"],
+                              contact=(request.form["phone1"], request.form["phone2"]))
+
     compte = request.form["compte"]
-    designation = request.form["designation"]
-    quantite = request.form["quantity"]
-    my_object = the_object(designation, quantite)
-    print(compte)
-    print(my_object.unite)
-    print(my_object.designation)
-    print(my_object.pu)
-    print(my_object.pt)
-    print(quantite)
-    print(date())
-    return "0"
+    products = int(request.form["products"])
+    facture = Facture(account=compte,
+                      responsable=responsable,
+                      company=company)
+    facture.tva = True
+    for prod in range(products):
+        my_object = the_object(request.form[f"designation{prod}"], request.form[f"quantity{prod}"])
+        facture.objects.append(my_object)
+    fact = generate_facture(fact=facture)
+    return send_file("Factures/Facture_test.png", as_attachment=True)
 
 
 def generate_facture(fact):
@@ -52,7 +58,8 @@ def generate_facture(fact):
     draw.text((940, 200), f"{fact.responsable.adress}", font=font_letter, fill=color)
     draw.text((280, 2045), f"{fact.responsable.adress}", font=font_letter, fill=color)
     # telephone
-    draw.text((1180, 345), f"{fact.responsable.contact[0]} / {fact.responsable.contact[1]}", font=font_number, fill=color)
+    draw.text((1180, 345), f"{fact.responsable.contact[0]} / {fact.responsable.contact[1]}", font=font_number,
+              fill=color)
     # draw.text((470, 1998), f"{fact.responsable.contact[0]}", font=font_number, fill=color)
     # company
     draw.text((850, 640), f"{fact.company.nature}", font=font_number, fill=color)
@@ -77,7 +84,7 @@ def generate_facture(fact):
     draw.text((550, 1715), f"{fact.total_char}", font=font_letter, fill=color)
 
     # Enregistrer la facture générée en tant qu'image
-    facture_path = os.path.join("static/Facture_test.png")
+    facture_path = os.path.join("Factures/Facture_test.png")
     facture.save(facture_path)
     return facture
 

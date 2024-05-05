@@ -6,7 +6,7 @@
 		<meta charset="utf-8" />
         <link rel="icon" href="static/images/favicon.ico">
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-<!--		<link rel="stylesheet" href="static/css/main.css" />-->
+		<link rel="stylesheet" href="static/css/style.css" />
 	</head>
 	<body class="is-loading">
 			<div id="wrapper">
@@ -15,20 +15,17 @@
                         <img src="static/images/logoa.png" alt="" width="85%"/>
                         <h1>Facturier</h1>
                     </header>
+
                     <hr />
-                    <form name = 'form' method="post" action="traitement.php">
-						<fieldset>
+                    <form name = 'form' id="my-form" method="post" action="/complete">
+						<fieldset class="print-fieldset">
 							<legend>Requis</legend>
 							<div>
-								<label for="compte">Num. Compte:</label>
+								<label for="compte">Numero de Compte:</label>
 								<input type="text" id="compte" name="compte" placeholder="" autofocus required>
 							</div>
-							<div>
-								<label for="products">Nombre de Produits :</label>
-								<input type="number" id="products" name="products" min="1" max="12" step="1" value="1" required>
-							</div>
 						</fieldset>
-						<fieldset>
+						<fieldset class="print-fieldset">
 							<legend>Optionnel</legend> <!-- Titre du fieldset -->
 
 							<label for="name">Nom et Prenom</label> :  <input type="text" name="name" id="name" value="Ndayisenga Jules Cesar Junior"/>
@@ -53,33 +50,103 @@
 							<!--	size: agrandir // maxlength: limiter l nombre de caracteres a saisir // value: remplir le champ avec une valeur par defaut   -->
 							<br /> <br />
 						</fieldset>
-						<fieldset>
+						<fieldset class="print-fieldset">
 							<legend>Produits </legend>
-							<div class="field">
+							<div class="flexy">
+								<label for="products">Nombre de Produits sur la Facture:</label>
+								<input type="number" id="products" name="products" min="1" max="12" step="1" value="1" required>
+								<button type="button" id="addButton">Ajouter</button>
+							</div>
+							<script>
+								// Add event listener to the "Ajouter" button
+								document.getElementById("addButton").addEventListener("click", function() {
+									var numberOfProductsInput = document.getElementById("products");
+									var numberOfProducts = parseInt(numberOfProductsInput.value);
+
+									// Update the value of numberOfProducts
+									//numberOfProducts++;
+
+									// Update the value of the input field
+									//numberOfProductsInput.value = numberOfProducts;
+								// Generate the select elements and input fields
+								var selectWrapper = document.querySelector(".select-wrapper");
+								selectWrapper.innerHTML = ""; // Clear the existing content
+
+								for (var a = 0; a < numberOfProducts; a++) {
+									var smallElement = document.createElement("small");
+									smallElement.textContent = a + 1 + ".";
+
+									var selectElement = document.createElement("select");
+									selectElement.name = "designation" + a;
+									selectElement.id = "designation" + a;
+
+									{% for obj in objects %}
+										var optionElement = document.createElement("option");
+										optionElement.value = "{{ obj }}";
+										optionElement.textContent = "{{ obj }}";
+										selectElement.appendChild(optionElement);
+									{% endfor %}
+
+									var inputElement = document.createElement("input");
+									inputElement.type = "number";
+									inputElement.name = "quantity" + a;
+									inputElement.id = "quantity" + a;
+									inputElement.min = "1";
+									inputElement.max = "100";
+									inputElement.step = "1";
+									inputElement.value = "1";
+									inputElement.required = true;
+
+									var brElement = document.createElement("br");
+
+									selectWrapper.appendChild(smallElement);
+									selectWrapper.appendChild(selectElement);
+									selectWrapper.appendChild(inputElement);
+									selectWrapper.appendChild(brElement);
+								}
+							});
+							</script>
+							<div class="field flex">
 								<div class="select-wrapper">
-									{% for a in range(2) %}
+									{% for a in range(1) %}
 										<small>{{a+1}}.</small>
 										<select name="designation{{a}}" id="designation{{a}}">
 											{% for obj in objects %}
 												<option value="{{obj}}">{{obj}}</option>
 											{% endfor %}
-											<input type="number" name="{{obj}}" id="{{obj}}" min="1" max="100" step="1" value="1" required/>
+											<input type="number" name="quantity{{a}}" id="quantity{{a}}" min="1" max="100" step="1" value="1" required/>
 											<br />
 										</select>
 									{% endfor %}
 								</div>
 							</div>
 						</fieldset>
-						<input type="submit" value="Envoyer" />
+						<input type="submit" id="submit-button" value="Imprimer la Facture" />
 						<br /> <br />
+
+<!--						<fieldset class="print-fieldset">-->
+<!--							<legend>Impression</legend>-->
+<!--							<div>-->
+<!--								<label for="num_pages">Nombre de pages à imprimer :</label>-->
+<!--								<input type="number" id="num_pages" name="num_pages" min="1" max="100" step="1" value="1" required>-->
+<!--							</div>-->
+<!--							<button type="submit" name="action" value="print">Imprimer</button>-->
+<!--						</fieldset>-->
+
 					</form>
+					<script>
+					  document.getElementById('submit-button').addEventListener('click', function() {
+						// Trigger the form submission when the submit button is clicked
+						document.querySelector('#my-form').submit();
+					  });
+					</script>
 					<hr />
                 </section>
 
             <!-- Footer -->
                 <footer id="footer">
                     <ul class="copyright">
-                        <li>&copy; samandari</li>
+                        <div>&copy; Bujumbura</div>
                     </ul>
                 </footer>
 			</div>

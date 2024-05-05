@@ -60,7 +60,7 @@ def convertir_en_lettres(nombre):
         return mots_base[nombre % 10] + '-dix'
 
     if 70 <= nombre < 80 or 90 <= nombre < 100:
-        dizaine = nombre // 10 - 1
+        dizaine = nombre // 10
         reste = nombre % 10
         if reste == 0:
             return mots_base[dizaine * 10]
@@ -123,7 +123,7 @@ def convertir_en_lettres(nombre):
 
 
 # Exemple d'utilisation
-nombre = 123456789
+nombre = 999000
 en_lettres = convertir_en_lettres(nombre)
 print(en_lettres)
 
