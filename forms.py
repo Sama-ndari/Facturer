@@ -123,9 +123,9 @@ def convertir_en_lettres(nombre):
 
 
 # Exemple d'utilisation
-nombre = 999000
-en_lettres = convertir_en_lettres(nombre)
-print(en_lettres)
+# nombre = 999000
+# en_lettres = convertir_en_lettres(nombre)
+# print(en_lettres)
 
 
 def date():
