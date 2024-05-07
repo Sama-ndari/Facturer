@@ -249,7 +249,7 @@ fieldset.print-fieldset button:hover {
     gap: 1rem;
 }
 
-fieldset.print-fieldset input{
+fieldset.print-fieldset input.tva{
     width:2%;
 }
 
