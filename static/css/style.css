@@ -250,6 +250,7 @@ fieldset.print-fieldset button:hover {
 }
 
 fieldset.print-fieldset input.tva{
-    width:2%;
+    width:4%;
+    box-shadow: 0px 0px 0px var(--box-shadow-color);
 }
 

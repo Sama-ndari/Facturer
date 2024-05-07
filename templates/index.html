@@ -48,7 +48,7 @@
 							<label for="adress">Adresse</label> :  <input type="text" name="adress" id="adress" value="Rohero I,Av. de l'Amitie,Building Isanganiro"/>
 							<!--	size: agrandir // maxlength: limiter l nombre de caracteres a saisir // value: remplir le champ avec une valeur par defaut   -->
 							<br /> <br />
-							<input type="checkbox" class="tva" id="tva" name="tva"> <label for="tva">TVA</label>
+							<label for="tva">TVA</label><input type="checkbox" class="tva" id="tva" name="tva">
 							<br><br>
 						</fieldset>
 						<fieldset class="print-fieldset">
@@ -63,48 +63,47 @@
 								document.getElementById("addButton").addEventListener("click", function() {
 									var numberOfProductsInput = document.getElementById("products");
 									var numberOfProducts = parseInt(numberOfProductsInput.value);
+                                    if(numberOfProducts < 12 && numberOfProducts > 0){
+                                        // Generate the select elements and input fields
+                                        var selectWrapper = document.querySelector(".select-wrapper");
+                                        selectWrapper.innerHTML = ""; // Clear the existing content
 
-									// Update the value of numberOfProducts
-									//numberOfProducts++;
+                                        for (var a = 0; a < numberOfProducts; a++) {
+                                            var smallElement = document.createElement("small");
+                                            smallElement.textContent = a + 1 + ".";
 
-									// Update the value of the input field
-									//numberOfProductsInput.value = numberOfProducts;
-								// Generate the select elements and input fields
-								var selectWrapper = document.querySelector(".select-wrapper");
-								selectWrapper.innerHTML = ""; // Clear the existing content
+                                            var selectElement = document.createElement("select");
+                                            selectElement.name = "designation" + a;
+                                            selectElement.id = "designation" + a;
 
-								for (var a = 0; a < numberOfProducts; a++) {
-									var smallElement = document.createElement("small");
-									smallElement.textContent = a + 1 + ".";
+                                            {% for obj in objects %}
+                                                var optionElement = document.createElement("option");
+                                                optionElement.value = "{{ obj }}";
+                                                optionElement.textContent = "{{ obj }}";
+                                                selectElement.appendChild(optionElement);
+                                            {% endfor %}
 
-									var selectElement = document.createElement("select");
-									selectElement.name = "designation" + a;
-									selectElement.id = "designation" + a;
+                                            var inputElement = document.createElement("input");
+                                            inputElement.type = "number";
+                                            inputElement.name = "quantity" + a;
+                                            inputElement.id = "quantity" + a;
+                                            inputElement.min = "1";
+                                            inputElement.max = "100";
+                                            inputElement.step = "1";
+                                            inputElement.value = "1";
+                                            inputElement.required = true;
 
-									{% for obj in objects %}
-										var optionElement = document.createElement("option");
-										optionElement.value = "{{ obj }}";
-										optionElement.textContent = "{{ obj }}";
-										selectElement.appendChild(optionElement);
-									{% endfor %}
+                                            var brElement = document.createElement("br");
 
-									var inputElement = document.createElement("input");
-									inputElement.type = "number";
-									inputElement.name = "quantity" + a;
-									inputElement.id = "quantity" + a;
-									inputElement.min = "1";
-									inputElement.max = "100";
-									inputElement.step = "1";
-									inputElement.value = "1";
-									inputElement.required = true;
-
-									var brElement = document.createElement("br");
-
-									selectWrapper.appendChild(smallElement);
-									selectWrapper.appendChild(selectElement);
-									selectWrapper.appendChild(inputElement);
-									selectWrapper.appendChild(brElement);
-								}
+                                            selectWrapper.appendChild(smallElement);
+                                            selectWrapper.appendChild(selectElement);
+                                            selectWrapper.appendChild(inputElement);
+                                            selectWrapper.appendChild(brElement);
+                                        }
+                                    }
+                                    else{
+                                        alert("  12 Produits max et 1 produit min   ");
+                                    }
 							});
 							</script>
 							<div class="field flex">
