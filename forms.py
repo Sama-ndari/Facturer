@@ -65,7 +65,7 @@ def convertir_en_lettres(nombre):
         if reste == 0:
             return mots_base[dizaine * 10]
         else:
-            return mots_base[dizaine * 10] + '-' + convertir_en_lettres(reste)
+            return mots_base[(dizaine-1) * 10] + '-' + convertir_en_lettres(reste+10)
 
     if nombre < 100:
         dizaine = nombre // 10
@@ -123,9 +123,9 @@ def convertir_en_lettres(nombre):
 
 
 # Exemple d'utilisation
-# nombre = 999000
-# en_lettres = convertir_en_lettres(nombre)
-# print(en_lettres)
+nombre = 86
+en_lettres = convertir_en_lettres(nombre)
+print(en_lettres)
 
 
 def date():
