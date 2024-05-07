@@ -27,12 +27,12 @@ def complete():
     facture = Facture(account=compte,
                       responsable=responsable,
                       company=company)
-    facture.tva = True
+    facture.tva = request.form.get("tva")
     for prod in range(products):
         my_object = the_object(request.form[f"designation{prod}"], request.form[f"quantity{prod}"])
         facture.objects.append(my_object)
     fact = generate_facture(fact=facture)
-    return send_file("Factures/Facture_test.png", as_attachment=True)
+    return send_file("static/images/Facture_test.png", as_attachment=True)
 
 
 def generate_facture(fact):
@@ -84,7 +84,7 @@ def generate_facture(fact):
     draw.text((550, 1715), f"{fact.total_char}", font=font_letter, fill=color)
 
     # Enregistrer la facture générée en tant qu'image
-    facture_path = os.path.join("Factures/Facture_test.png")
+    facture_path = os.path.join("static/images/Facture_test.png")
     facture.save(facture_path)
     return facture
 
